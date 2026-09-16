@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="messages"></div>
+    <script>
+        const eventSource = new EventSource("http://localhost:8080/events");
+
+        eventSource.onmessage = function(event) {
+            console.log("New broadcast received:", event.data);
+            const messages = document.getElementById("messages");
+            messages.innerHTML += `<p>${event.data}</p><br>`;
+        };
+
+        eventSource.onerror = function(error) {
+            console.error("Stream failed or disconnected:", error);
+        };
+    </script>
+</body>
+</html>
